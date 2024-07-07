@@ -30,9 +30,13 @@ connectToMongoDb(process.env.MONGO_URL).then(() => {
 
 app.get("/" , async (req,res) => {
     const allBlogs = await Blog.find({});
-    res.render("home" , {
-        user : req.user,
-        blogs : allBlogs
+    const blogsWithSummary = allBlogs.map(blog => {
+      const truncatedContent = blog.body.length > 100 ? blog.body.substring(0, 97) + '...' : blog.content;
+      return { ...blog.toObject(), summary: truncatedContent };
+    });
+    res.render("home", {
+      user: req.user,
+      blogs: blogsWithSummary
     });
 });
 

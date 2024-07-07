@@ -1,3 +1,4 @@
 .env
 serverlog.txt
 public/uploads/
+node_modules
