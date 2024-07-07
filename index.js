@@ -10,7 +10,7 @@ const Blog = require("./models/blog");
 
 
 const app = express();
-const PORT = 8000;
+const PORT = process.env.PORT || 8000;
 
 app.use(requestLogger("serverlog.txt"));
 app.use(express.urlencoded({extended: false}));
@@ -21,7 +21,7 @@ app.use(express.static(path.resolve("./public")));
 app.set("view engine" , "ejs");
 app.set("views", path.resolve("./views"));
 
-connectToMongoDb("mongodb://127.0.0.1:27017/thoughtnest").then(() => {
+connectToMongoDb(process.env.MONGO_URL).then(() => {
     console.log("MongoDB connected");
 });
 
